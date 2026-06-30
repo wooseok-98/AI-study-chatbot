@@ -43,9 +43,9 @@ v1_basic_llm/
 │   │   ├── health_router.py   # GET /health (서버 생존 확인)
 │   │   └── chat_router.py     # POST /chat, GET /chat/{session_id}/history
 │   ├── controllers/
-│   │   └── chat_controller.py # ⭐ 멀티턴 흐름 + DB 저장/조회 (직접 구현)
+│   │   └── chat_controller.py # 멀티턴 흐름 + DB 저장/조회 (직접 구현)
 │   ├── core/
-│   │   └── llm.py             # ⭐ Claude API 호출 (직접 구현, 모델 교체 단일 지점)
+│   │   └── llm.py             # Claude API 호출 (직접 구현, 모델 교체 단일 지점)
 │   └── schemas/
 │       └── chat.py            # 요청/응답 Pydantic 모델
 └── static/                    # 채팅 UI (index.html / style.css / script.js)
@@ -55,7 +55,7 @@ v1_basic_llm/
    └── data/chat.db            # DB 파일 (자동 생성, git 제외)
 ```
 
-> ⭐ 표시(`core/llm.py`, `chat_controller.py`)는 학습 핵심 → **직접 구현**
+> `core/llm.py`, `chat_controller.py`는 코드 핵심
 > 나머지(라우터·스키마·골격·UI)는 보일러플레이트
 > DB는 모든 버전이 공유하므로 `shared/`에 위치 (UI는 버전마다 달라질 수 있어 버전별 유지)
 
@@ -73,7 +73,7 @@ messages = [
 ]
 ```
 
-**멀티턴 = 이전 대화를 매번 다시 전송** (stateless 보완)
+**멀티턴 = 이전 대화를 매번 다시 전송** - stateless 보완
 
 ```
 DB에서 이전 대화 조회 → 이번 질문 추가(user) → 전체 전송 → 답변 → DB에 질문·답변 저장
