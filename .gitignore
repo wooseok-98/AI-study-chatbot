@@ -1,0 +1,17 @@
+# 환경변수 / 비밀키 (절대 커밋 금지)
+.env
+*.env
+!.env.example
+
+# 데이터베이스 파일
+*.db
+shared/data/*.db
+
+# 파이썬
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
