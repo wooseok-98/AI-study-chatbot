@@ -17,8 +17,9 @@ RAG·프레임워크 없이 **순수 API 호출**로 동작하며, 대화는 SQL
 ```
 [브라우저] ──POST /chat──▶ [router] ─▶ [controller] ─▶ [core/llm.py] ──▶ [Claude API]
                                           │ 저장/조회                    │
-                                          ▼                              │
-                                     [shared/db.py] (SQLite)             │
+                                          ▼                            │
+                                     [shared/db.py] (SQLite)           │
+                                                                       │
 [브라우저] ◀────────────────응답──────────────────────────────────────────┘
 ```
 
