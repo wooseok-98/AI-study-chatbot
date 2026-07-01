@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+anthropic
+python-dotenv
+
+# RAG (v2 추가)
+sentence-transformers
+faiss-cpu
+numpy
+requests
