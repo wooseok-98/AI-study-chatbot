@@ -55,10 +55,10 @@ POST /chat
 
 ```
 chatbot_project/
-├── v1_basic_llm/          # 기본 대화 챗봇 (Claude + SQLite 멀티턴)     ✅
-├── v2_rag/                # 멀티소스 RAG (프레임워크 없이 직접 구현)     ✅
-├── v3_langchain/          # LCEL 체인으로 재구성                        ✅
-├── v4_langgraph/          # ReAct 에이전트 (도구 선택)                  ✅
+├── v1_basic_llm/          # 기본 대화 챗봇 (Claude + SQLite 멀티턴)     
+├── v2_rag/                # 멀티소스 RAG (프레임워크 없이 직접 구현)     
+├── v3_langchain/          # LCEL 체인으로 재구성                        
+├── v4_langgraph/          # ReAct 에이전트 (도구 선택)                  
 │   └── app/
 │       ├── routers/       #   엔드포인트
 │       ├── controllers/   #   흐름 제어 + DB
@@ -70,15 +70,13 @@ chatbot_project/
 │   ├── ingest/            #   markdown_loader / wiki_loader
 │   ├── scripts/           #   build_index (v2) / build_index_lc (v3·v4)
 │   └── data/              #   *_index (git 제외, 빌드 산출물)
-│
-└── finetune/              # (v5 예정) 파인튜닝
+
 ```
 
 **설계 규칙**
 - 3계층 분리: `routers → controllers → core`
 - `core/` = **버전별 오케스트레이션** (raw → LangChain → LangGraph) — 버전 간 차이가 여기 집중
 - 인덱스·DB·로더는 `shared/`에 공유, UI(static)는 버전별 유지
-- 실무는 git 브랜치/태그가 정석. **비교 목적상** 폴더로 분리
 
 ---
 
@@ -86,29 +84,22 @@ chatbot_project/
 
 버전별 커밋으로 발전 과정 기록
 
-### v1 — 기본 대화 챗봇 ✅
+### v1 — 기본 대화 챗봇
 - FastAPI 3계층 + Claude API 멀티턴 대화
 - SQLite 대화 영속 (새로고침·재시작에도 보존)
 
-### v2 — 멀티소스 RAG (프레임워크 없이 직접) ✅
+### v2 — 멀티소스 RAG (프레임워크 없이 직접)
 - 노트+위키 인덱싱(chunking → 임베딩 → FAISS), top-k 검색 → grounding 응답
 - 출처 표시, 근거 없으면 "모름", 두 소스 점수순 병합
 - RAG 원리를 밑바닥부터 직접 구현
 
-### v3 — LangChain 리팩토링 ✅
+### v3 — LangChain 리팩토링
 - v2 로직을 LCEL 체인(`retrieve | prompt | llm | parser`)으로 재구성
 - raw 구현 ↔ 프레임워크 구현 대조 (결과 동일 검증)
 
-### v4 — LangGraph ReAct 에이전트 ✅
+### v4 — LangGraph ReAct 에이전트
 - 도구 3개(노트·위키·웹) + StateGraph ReAct 루프
 - **LLM이 질문에 따라 도구를 스스로 선택** (개념→노트/위키, 실시간→웹)
-
-### v5 — 파인튜닝 (예정)
-- 한국어 오픈모델 LoRA 파인튜닝 (데이터: 노트 기반 Q&A)
-- `core/llm` 교체로 API ↔ 파인튜닝 비교 실험
-
-### 평가 (예정)
-- RAGAS / LLM-as-Judge 로 RAG 품질 정량화
 
 ---
 
