@@ -22,8 +22,8 @@ v3까지는 정해진 흐름(무조건 노트+위키 검색)이었다면, v4는 
 ## 2. 동작 흐름 (ReAct 루프)
 
 ```
-START → agent(LLM) ──도구 원함?──▶ tools 실행 ──┐
-             │  아니면(답변)                    │ (결과 갖고)
+START → agent(LLM) ──도구 원함?──▶ tools 실행 ─────┐
+             │  아니면(답변)                       │ (결과 갖고)
              ▼                                  │
             END  ◀──────────────── agent 로 복귀 ┘
 ```
@@ -53,8 +53,8 @@ v4_langgraph/
 │   ├── core/
 │   │   ├── llm.py             # ChatAnthropic (도구 바인딩 대상)
 │   │   ├── rag.py             # search_notes / search_wiki (도구가 호출)
-│   │   ├── tools.py           # ⭐ 도구 3개 (@tool)
-│   │   └── graph.py           # ⭐ ReAct 에이전트 (StateGraph)
+│   │   ├── tools.py           # 도구 3개 (@tool)
+│   │   └── graph.py           # ReAct 에이전트 (StateGraph)
 │   └── schemas/
 └── static/                    # v3 재활용
 
@@ -84,8 +84,6 @@ llm_with_tools = llm.bind_tools(TOOLS)
 builder.add_conditional_edges("agent", tools_condition)  # 도구? tools : END
 builder.add_edge("tools", "agent")
 ```
-
-> 디버깅 팁: `result["messages"]`를 순회하면 LLM이 어떤 도구를 호출했는지(궤적) 볼 수 있음 — 에이전트 튜닝의 필수
 
 ---
 
