@@ -1,7 +1,7 @@
 # 📚 AI 학습 도우미 챗봇 (Study Buddy Chatbot)
 
 내 학습 노트와 위키피디아를 근거로 답하는 한국어 RAG 챗봇
-`기본 대화 → RAG → LangChain → LangGraph 에이전트` 순으로 발전시킨 학습·포트폴리오 프로젝트
+`기본 대화 → RAG → LangChain → LangGraph 에이전트` 순으로 발전시킨 학습 프로젝트
 
 ---
 
@@ -42,8 +42,6 @@ POST /chat
 | 서빙 | FastAPI + Uvicorn |
 | 저장 | SQLite (대화 영속) |
 | 프론트 | 정적 채팅 UI (HTML/CSS/JS) |
-| 평가 | RAGAS (예정) |
-| LLM 확장 | 한국어 오픈모델 LoRA 파인튜닝 (v5 예정) |
 
 ---
 
