@@ -140,4 +140,3 @@ python main.py                 # http://localhost:8000
 - [x] grounding 생성 (`llm.py`)
 - [x] controller 연결 (멀티턴+DB+출처)
 - [x] 위키 소스 추가 + 병합
-- [ ] RAG 평가 (RAGAS / LLM-as-Judge) — 예정
