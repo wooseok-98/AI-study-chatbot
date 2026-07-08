@@ -62,12 +62,12 @@ chatbot_project/
 │       ├── controllers/   #   흐름 제어 + DB
 │       └── core/          #   llm / rag / (chains: v3) (tools·graph: v4)
 │
-├── shared/                # 버전 공통 인프라
-│   ├── db.py              #   대화 SQLite
-│   ├── embedding.py       #   글→벡터 (ko-sroberta)
-│   ├── ingest/            #   markdown_loader / wiki_loader
-│   ├── scripts/           #   build_index (v2) / build_index_lc (v3·v4)
-│   └── data/              #   *_index (git 제외, 빌드 산출물)
+└── shared/                # 버전 공통 인프라
+    ├── db.py              #   대화 SQLite
+    ├── embedding.py       #   글→벡터 (ko-sroberta)
+    ├── ingest/            #   markdown_loader / wiki_loader
+    ├── scripts/           #   build_index (v2) / build_index_lc (v3·v4)
+    └── data/              #   *_index (git 제외, 빌드 산출물)
 
 ```
 
