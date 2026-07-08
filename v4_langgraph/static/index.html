@@ -1,0 +1,31 @@
+<!-- 채팅 UI 화면 (프론트엔드) -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 학습 도우미 챗봇 - v1</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="chat-container">
+    <header class="chat-header">
+      📚 AI 학습 도우미 <span class="version">v1</span>
+    </header>
+
+    <div id="messages" class="messages"></div>
+
+    <form id="chat-form" class="input-area">
+      <input
+        id="input"
+        type="text"
+        placeholder="메시지를 입력하세요…"
+        autocomplete="off"
+      />
+      <button type="submit">전송</button>
+    </form>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

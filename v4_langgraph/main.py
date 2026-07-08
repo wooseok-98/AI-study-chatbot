@@ -13,14 +13,14 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
-load_dotenv(os.path.join(BASE_DIR, ".env"))  # 루트의 .env 를 로드 (전 버전 공통)
+load_dotenv(os.path.join(BASE_DIR, ".env"))  # 루트의 .env 를 명시적으로 로드
 
 from shared import db
 from app.routers import health_router, chat_router
 
 db.init_db()  # messages 테이블 준비 (없으면 생성)
 
-app = FastAPI(title="AI 학습 도우미 챗봇 - v1")
+app = FastAPI(title="AI 학습 도우미 챗봇 - v4 (LangGraph 에이전트)")
 
 app.include_router(health_router.router)
 app.include_router(chat_router.router)
