@@ -1,7 +1,9 @@
 # 📚 AI 학습 도우미 챗봇 (Study Buddy Chatbot)
 
-학습 노트와 공식 문서를 근거로 답하는 한국어 RAG 챗봇
+학습 노트와 위키피디아를 근거로 답하는 한국어 RAG 챗봇
 `RAG → LangChain → LangGraph` 순으로 발전시키는 학습용 프로젝트
+
+> **진행 상태**: v1(기본 대화)·v2(멀티소스 RAG)·v3(LangChain) 완료 / v4(LangGraph)·v5(파인튜닝) 예정
 
 ---
 
@@ -60,28 +62,29 @@ POST /chat
 
 ```
 chatbot_project/
-├── v1_basic_llm/          # 기본 대화 챗봇 (API)
-├── v2_rag/                # 노트 RAG  구현
-├── v3_langchain/          # LCEL 체인으로 재구성
-├── v4_langgraph/          # 소스 라우팅 에이전트
+├── v1_basic_llm/          # 기본 대화 챗봇 (API + SQLite)          ✅
+├── v2_rag/                # 노트+위키 RAG (프레임워크 없이 직접)   ✅
+├── v3_langchain/          # LCEL 체인으로 재구성                   ✅
+├── v4_langgraph/          # 소스 라우팅 에이전트                   (예정)
 │   └── app/
 │       ├── routers/       #   엔드포인트
-│       ├── controllers/   #   입력 검증·흐름 제어
+│       ├── controllers/   #   흐름 제어
 │       └── core/          #   llm.py / rag.py / chains.py / graph.py
 │
-├── shared/                # 버전 공통 자산
-│   ├── ingest/            #   markdown_loader.py / docs_loader.py
-│   ├── data/              #   notes_index/ docs_index/ eval/
-│   ├── scripts/           #   build_index.py / run_eval.py
-│   └── static/            #   채팅 UI
+├── shared/                # 버전 공통 자산 (인프라)
+│   ├── db.py              #   대화 SQLite
+│   ├── embedding.py       #   글→벡터 (ko-sroberta)
+│   ├── ingest/            #   markdown_loader / wiki_loader
+│   ├── scripts/           #   build_index (v2) / build_index_lc (v3)
+│   └── data/              #   notes_index, wiki_index, lc_* (git 제외)
 │
-└── finetune/              # (v5) make_dataset.py / train_lora.py / compare.py
+└── finetune/              # (v5 예정) make_dataset / train_lora / compare
 ```
 
 **설계 규칙**
 - 3계층 분리: `routers → controllers → core`
-- `core/llm.py` = LLM 교체 단일 지점 (API ↔ 파인튜닝)
-- 인덱스·UI는 `shared/`에 1회 구성 후 전 버전 공유
+- `core/` = 버전별 오케스트레이션 (raw → LangChain → LangGraph)
+- 인덱스·DB·로더는 `shared/`에 공유, UI(static)는 버전별 유지
 - 실무는 git 브랜치/태그로 버전 관리가 정석. 비교 목적상 폴더 분리
 
 ---
@@ -123,14 +126,22 @@ chatbot_project/
 
 ---
 
-## 5. 실행 (작성 예정)
+## 5. 실행
+
+각 버전 독립 실행. 공통: venv + 루트 `.env`(ANTHROPIC_API_KEY)
 
 ```bash
-pip install -r requirements.txt
-cp .env.example .env                      # API 키 입력
+cp v1_basic_llm/.env .env                 # 루트에 API 키
 
-python shared/scripts/build_index.py      # 인덱스 빌드 (최초 1회)
+# ── v2 (직접 구현 RAG) ──
+pip install -r v2_rag/requirements.txt
+python -m shared.scripts.build_index      # notes_index, wiki_index 빌드
+cd v2_rag && python main.py               # http://localhost:8000
 
-cd v2_rag                                 # 실행할 버전 선택
-python main.py                            # http://localhost:8000
+# ── v3 (LangChain) ──
+pip install -r v3_langchain/requirements.txt
+python -m shared.scripts.build_index_lc   # lc_notes_index, lc_wiki_index 빌드
+cd v3_langchain && python main.py
 ```
+
+> 인덱스는 `shared/data/`에 생성 (git 제외). 빌드는 최초 1회

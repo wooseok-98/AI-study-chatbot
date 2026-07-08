@@ -1,5 +1,7 @@
 """위키피디아 로딩 + 청킹 — MediaWiki API로 문서를 받아 문단 단위로 조각낸다"""
 
+import time
+
 import requests
 
 API_URL = "https://ko.wikipedia.org/w/api.php"
@@ -33,7 +35,13 @@ def _fetch(title: str):
         "format": "json",
     }
     resp = requests.get(API_URL, params=params, headers=HEADERS, timeout=10)
-    pages = resp.json()["query"]["pages"]
+    try:
+        data = resp.json()                  # 응답이 JSON 아니면(rate limit 등) 예외
+    except ValueError:
+        return None, None
+    pages = data.get("query", {}).get("pages", {})
+    if not pages:
+        return None, None
     page = next(iter(pages.values()))       # 결과 첫 문서
     if "missing" in page or not page.get("extract"):
         return None, None
@@ -43,9 +51,10 @@ def _fetch(title: str):
 def load_and_chunk_wiki() -> list[dict]:
     chunks = []
     for topic in TOPICS:
+        time.sleep(0.3)   # rate limit 회피용 짧은 딜레이
         title, text = _fetch(topic)
         if text is None:
-            print(f"⚠️  없음: {topic}")
+            print(f"⚠️  없음/실패: {topic}")
             continue
         source = f"wiki:{title}"
         for chunk in split_by_paragraph(text):

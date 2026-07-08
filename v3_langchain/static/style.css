@@ -1,0 +1,93 @@
+/* 채팅 UI 스타일 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, "Apple SD Gothic Neo", sans-serif;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 640px;
+  height: 90vh;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 18px 20px;
+  background: #2d6cdf;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+.chat-header .version {
+  font-size: 13px;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.msg {
+  max-width: 78%;
+  padding: 11px 15px;
+  border-radius: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.msg.user {
+  align-self: flex-end;
+  background: #2d6cdf;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.msg.bot {
+  align-self: flex-start;
+  background: #eef0f3;
+  color: #1a1a1a;
+  border-bottom-left-radius: 4px;
+}
+.msg.bot.loading { color: #888; }
+
+.input-area {
+  display: flex;
+  gap: 8px;
+  padding: 14px;
+  border-top: 1px solid #eee;
+}
+.input-area input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 15px;
+  outline: none;
+}
+.input-area input:focus { border-color: #2d6cdf; }
+.input-area button {
+  padding: 0 20px;
+  background: #2d6cdf;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.input-area button:disabled { background: #9bb8ec; cursor: default; }
