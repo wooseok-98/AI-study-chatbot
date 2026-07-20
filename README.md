@@ -119,3 +119,8 @@ cd v4_langgraph && python main.py           # (v3도 동일 인덱스 사용)
 
 > 인덱스는 `shared/data/`에 생성 (git 제외, 빌드 최초 1회)
 > v1은 인덱스 불필요 — `cd v1_basic_llm && python main.py`
+
+---
+
+## 6. 회고
+[AI 학습 도우미 챗봇 프로젝트 - 벨로그 회고](https://velog.io/@dan9872/series/AI-%EC%B1%97%EB%B4%87-%EC%A0%9C%EC%9E%91-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B8%B0%EC%B4%88%EB%B6%80%ED%84%B0-LangGraph%EA%B9%8C%EC%A7%80)
